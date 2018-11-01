@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8"
+	<title>Intro a JS</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/formulario.css">
+</head>
+<body>
+<main class="container">
+	<h2>Registro de Estudiantes</h2>
+	<form class="form" id="formulario">
+		<div class="form-group">
+			<input class="form-control" type="text" placeholder="Identificación" id="identificacion" name="identificacion" required></input>
+			<input class="form-control" type="text" placeholder="Nombre" id="nombre" name="nombre" required></input>
+			<input class="form-control" type="text" placeholder="Apellido" id="apellido" name="apellido" required></input>
+			<input class="form-control" type="email" placeholder="Email" id="email" name="email" required></input>
+			<input type="hidden" name="tipo" value="3"></input>
+			<input class="btn btn-success" type="submit" value="Agregar"></input>
+		</div>
+	</form>
+	<h2>Listado de Estudiantes</h2>
+	<table class="table" id="listado">
+		<tr>
+			<th>Identificación</th>
+			<th>Nombre</th>
+			<th>Apellido</th>
+			<th>Email</th>
+			<th>Opciones</th>
+		</tr>
+	</table>
+</main>
+</body>
+<script type="text/javascript" src="js/formulario.js" ></script>
+</html>

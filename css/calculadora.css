@@ -1,0 +1,29 @@
+input[type=text]{
+	text-align: right;
+	height: 100px !important;
+	font-size: 50px !important;
+	font-weight: bold;
+	background-color: black;
+	color: white;
+}
+input[type=button]{
+	height: 80px;
+	margin: 1px;
+	box-sizing: border-box !important;
+}
+input[type=button]:last-child{
+	margin-right: 0;
+	max-width: 24.5%;
+}
+
+.flex{
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.bg-gris{
+	background-color: gray;
+}
+.bg-naranja{
+	background-color: orange;
+}
