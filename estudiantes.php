@@ -2,7 +2,7 @@
 include 'conexion.php';
 if(isset($_GET)){
   $tipo = $_GET['tipo'];
-  switch ($tipo) {
+  switch ($tipo) { 
     case '1':
       // SELECT de todo
       $query = "SELECT * FROM estudiantes";
