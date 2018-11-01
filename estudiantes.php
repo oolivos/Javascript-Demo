@@ -1,8 +1,8 @@
 <?php
 include 'conexion.php';
-if(isset($_GET)){
+if(isset($_GET['tipo'])){
   $tipo = $_GET['tipo'];
-  switch ($tipo) { 
+  switch ($tipo) {
     case '1':
       // SELECT de todo
       $query = "SELECT * FROM estudiantes";
@@ -49,7 +49,7 @@ if(isset($_GET)){
   }
 }
 
-if (isset($_POST)) {
+if (isset($_POST['identificacion'])) {
   $identificacion = $_POST['identificacion'];
   $nombre = $_POST['nombre'];
   $apellido = $_POST['apellido'];
@@ -59,7 +59,7 @@ if (isset($_POST)) {
   if($resultado = mysqli_query($conexion, $sql)){
     if(mysqli_num_rows($resultado) > 0){
       // Actualización
-      $update = "UPDATE estudiantes SET nombre = $nombre, apellido = $apellido, email = $email WHERE identificacion = $identificacion";
+      $update = "UPDATE estudiantes SET nombres = '$nombre', apellidos = '$apellido', email = '$email' WHERE identificacion = $identificacion";
 
       if(mysqli_query($conexion, $update)){
         echo json_encode([
@@ -74,7 +74,7 @@ if (isset($_POST)) {
       }
     }else{
       //Nuevo
-      $insert = "INSERT INTO estudiantes(identificacion, nombre,apellido, email) VALUES($identificacion, $nombre, $apellido, $email)";
+      $insert = "INSERT INTO estudiantes(identificacion, nombres,apellidos, email) VALUES('$identificacion', '$nombre', '$apellido', '$email')";
       if(mysqli_query($conexion, $insert)){
         echo json_encode([
           'estado' => 'ok',

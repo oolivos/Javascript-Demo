@@ -12,27 +12,30 @@ document.getElementById('formulario').addEventListener('submit',function(event){
 	}).then((data) => {
 		// OK
 		alert(data.mensaje)
-		if(editando){
-			//
-			trEditar.children[0].innerText = document.getElementById('identificacion').value
-			trEditar.children[1].innerText = document.getElementById('nombre').value
-			trEditar.children[2].innerText = document.getElementById('apellido').value
-			trEditar.children[3].innerText = document.getElementById('email').value
-		}else{
-			let row = document.getElementById('listado').insertRow(1)
-			row.insertCell(0).innerHTML = document.getElementById('identificacion').value
-			row.insertCell(1).innerHTML = document.getElementById('nombre').value
-			row.insertCell(2).innerHTML = document.getElementById('apellido').value
-			row.insertCell(3).innerHTML = document.getElementById('email').value
-			row.insertCell(4).innerHTML = '<button onclick="editar(event.target)"  class="btn btn-sm btn-warning">Editar</button> <button onclick="eliminar(event.target)" class="btn btn-sm btn-danger">Eliminar</button>'
-		}
-		document.getElementById('identificacion').value = ""
-		document.getElementById('nombre').value = ""
-		document.getElementById('apellido').value = ""
-		document.getElementById('email').value = ""
+		if(data.estado === 'ok'){
+			if(editando){
+				//
+				trEditar.children[0].innerText = document.getElementById('identificacion').value
+				trEditar.children[1].innerText = document.getElementById('nombre').value
+				trEditar.children[2].innerText = document.getElementById('apellido').value
+				trEditar.children[3].innerText = document.getElementById('email').value
+			}else{
+				let row = document.getElementById('listado').insertRow(1)
+				row.insertCell(0).innerHTML = document.getElementById('identificacion').value
+				row.insertCell(1).innerHTML = document.getElementById('nombre').value
+				row.insertCell(2).innerHTML = document.getElementById('apellido').value
+				row.insertCell(3).innerHTML = document.getElementById('email').value
+				row.insertCell(4).innerHTML = '<button onclick="editar(event.target)"  class="btn btn-sm btn-warning">Editar</button> <button onclick="eliminar(event.target)" class="btn btn-sm btn-danger">Eliminar</button>'
+			}
+			document.getElementById('identificacion').value = ""
+			document.getElementById('nombre').value = ""
+			document.getElementById('apellido').value = ""
+			document.getElementById('email').value = ""
 
-		editando = false
-		document.getElementById('identificacion').readOnly = false
+			editando = false
+			document.getElementById('identificacion').readOnly = false
+		}
+
 
 	}).catch((err) => {
 		alert(err)
