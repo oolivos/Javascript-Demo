@@ -58,14 +58,32 @@
         },
         methods:{
           agregar(){
-            if(this.editando){
-              const index = this.estudiantes.indexOf(this.estudianteEnEdicion)
-              this.estudiantes.splice(index,1,this.estudiante)
-            }else{
-              this.estudiantes.push(this.estudiante)
-            }
-            this.editando = false
-            this.limpiar()
+            datos = new FormData()
+            datos.append('identificacion', this.estudiante.identificacion)
+            datos.append('nombre', this.estudiante.nombres)
+            datos.append('apellido', this.estudiante.apellidos)
+            datos.append('email', this.estudiante.email)
+
+            fetch('estudiantes.php', {
+          		'method': 'POST',
+          		'body': datos
+          	}).then((response) => {
+          		return response.json()
+          	}).then((data) => {
+          		alert(data.mensaje)
+          		if(data.estado === 'ok'){
+          			if(app.editando){
+                  const index = app.estudiantes.indexOf(app.estudianteEnEdicion)
+                  app.estudiantes.splice(index,1,app.estudiante)
+          			}else{
+          				app.estudiantes.push(app.estudiante)
+          			}
+          			app.limpiar()
+          			app.editando = false
+          		}
+          	}).catch((err) => {
+          		alert(err)
+          	})
           },
           limpiar(){
             this.estudiante = {
@@ -76,7 +94,24 @@
             }
           },
           eliminar(estudiante){
-            this.estudiantes.splice(this.estudiantes.indexOf(estudiante),1)
+            if(confirm('Esta seguro?')){
+          		fetch('estudiantes.php?doc='+estudiante.identificacion+'&tipo=2')
+          		.then((response) => {
+          			return response.json()
+          		})
+          		.then((data) => {
+          			alert(data.mensaje)
+          			app.estudiantes.splice(this.estudiantes.indexOf(estudiante),1)
+          		})
+          		.catch((err) => {
+          			alert(err)
+          		})
+          	}
+
+
+
+
+
           },
           editar(estudiante){
             this.estudianteEnEdicion = estudiante
@@ -84,6 +119,13 @@
             this.editando = true
           }
         },
+        mounted(){
+          fetch('estudiantes.php?tipo=1').then((response) => {
+          	return response.json()
+          }).then((data) => {
+          	this.estudiantes = data.data
+          })
+        }
       })
 
     </script>
