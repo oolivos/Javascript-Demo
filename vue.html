@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Intro VueJS</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/formulario.css">
+  </head>
+  <body>
+    <main class="container" id="app">
+    	<h2>Registro de Estudiantes</h2>
+    	<form class="form" id="formulario" v-on:submit.prevent="agregar()" >
+        <div class="form-group">
+    			<input class="form-control" type="text" placeholder="Identificación" v-model="estudiante.identificacion" required></input>
+    			<input class="form-control" type="text" placeholder="Nombre" v-model="estudiante.nombres" required></input>
+    			<input class="form-control" type="text" placeholder="Apellido" v-model="estudiante.apellidos" required></input>
+    			<input class="form-control" type="email" placeholder="Email" v-model="estudiante.email" required></input>
+    			<input class="btn btn-success" type="submit" value="Agregar"></input>
+    		</div>
+    	</form>
+      {{$data}}
+    	<h2>Listado de Estudiantes</h2>
+    	<table class="table" id="listado">
+    		<tr>
+    			<th>Identificación</th>
+    			<th>Nombre</th>
+    			<th>Apellido</th>
+    			<th>Email</th>
+    			<th>Opciones</th>
+    		</tr>
+        <tr v-for="estudiante in estudiantes">
+          <td>{{estudiante.identificacion}}</td>
+          <td>{{estudiante.nombres}}</td>
+          <td>{{estudiante.apellidos}}</td>
+          <td>{{estudiante.email}}</td>
+          <td>
+            <button @click="editar(estudiante)" class="btn btn-warning" type="button" >Editar</button>
+            <button @click="eliminar(estudiante)" type="button" class="btn btn-danger" >Eliminar</button>
+          </td>
+        </tr>
+    	</table>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '#app',
+        data: {
+          nombre : 'Oscar',
+          estudiante : {
+            identificacion: '',
+            nombres: '',
+            apellidos: '',
+            email: ''
+          },
+          estudiantes: [],
+          estudianteEnEdicion: '',
+          editando: false
+        },
+        methods:{
+          agregar(){
+            if(this.editando){
+              const index = this.estudiantes.indexOf(this.estudianteEnEdicion)
+              this.estudiantes.splice(index,1,this.estudiante)
+            }else{
+              this.estudiantes.push(this.estudiante)
+            }
+            this.editando = false
+            this.limpiar()
+          },
+          limpiar(){
+            this.estudiante = {
+              identificacion: '',
+              nombres: '',
+              apellidos: '',
+              email: ''
+            }
+          },
+          eliminar(estudiante){
+            this.estudiantes.splice(this.estudiantes.indexOf(estudiante),1)
+          },
+          editar(estudiante){
+            this.estudianteEnEdicion = estudiante
+            this.estudiante = JSON.parse(JSON.stringify(estudiante))
+            this.editando = true
+          }
+        },
+      })
+
+    </script>
+  </body>
+</html>
